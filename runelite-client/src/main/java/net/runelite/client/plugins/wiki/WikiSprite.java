@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, AeonLucid <https://github.com/AeonLucid>
+ * Copyright (c) 2018 Abex
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,36 +22,23 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.http.service.osbuddy;
+package net.runelite.client.plugins.wiki;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.CacheControl;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import net.runelite.api.SpriteID;
+import net.runelite.client.game.SpriteOverride;
 
-@RestController
-@RequestMapping("/osb/ge")
-public class GrandExchangeController
+@RequiredArgsConstructor
+public enum WikiSprite implements SpriteOverride
 {
-	private final GrandExchangeService grandExchangeService;
+	WIKI_ICON(-300, "wiki.png"),
+	WIKI_SELECTED_ICON(-301, "wiki_selected.png"),
+	FIXED_MODE_MINIMAP_CLICKMASK(SpriteID.MINIMAP_CLICK_MASK, "fixed_mode_minimap_clickmask.png");
 
-	@Autowired
-	public GrandExchangeController(GrandExchangeService grandExchangeService)
-	{
-		this.grandExchangeService = grandExchangeService;
-	}
+	@Getter
+	private final int spriteId;
 
-	@RequestMapping
-	public ResponseEntity<GrandExchangeEntry> get(@RequestParam("itemId") int itemId) throws ExecutionException
-	{
-		GrandExchangeEntry grandExchangeEntry = grandExchangeService.get(itemId);
-
-		return ResponseEntity.ok()
-			.cacheControl(CacheControl.maxAge(30, TimeUnit.MINUTES).cachePublic())
-			.body(grandExchangeEntry);
-	}
+	@Getter
+	private final String fileName;
 }

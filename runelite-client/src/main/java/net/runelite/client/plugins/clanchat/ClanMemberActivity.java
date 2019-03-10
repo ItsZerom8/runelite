@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, AeonLucid <https://github.com/AeonLucid>
+ * Copyright (c) 2018, trimbe <github.com/trimbe>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,17 +22,17 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.http.api.osbuddy;
+package net.runelite.client.plugins.clanchat;
 
-import java.time.Instant;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Value;
+import net.runelite.api.ClanMember;
 
-@Data
-public class GrandExchangeResult
+@Value
+@AllArgsConstructor
+class ClanMemberActivity
 {
-	private int item_id;
-	private int buy_average;
-	private int sell_average;
-	private int overall_average;
-	private Instant last_update;
+	private ClanActivityType activityType;
+	private ClanMember member;
+	private Integer tick;
 }
